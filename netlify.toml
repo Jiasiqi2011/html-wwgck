@@ -52,11 +52,3 @@
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
-
-
-    [build]
-  # 发布目录：当前目录（根目录）
-  publish = "."
-  
-  # 构建命令（简单的成功命令）
-  command = "echo '🚀 HTML site deployment successful'"

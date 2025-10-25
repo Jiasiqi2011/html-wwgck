@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片 - WG</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #f72585;
+            --dark-bg: #1a1a1a;
+            --content-bg: #ffffff;
+            --text-dark: #2b2d42;
+            --text-light: #f8f9fa;
+            --border-color: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7ff;
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 0;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .image-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px 40px;
+        }
+        
+        .image-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .image-title {
+            font-size: 2.2rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .image-subtitle {
+            color: var(--text-dark);
+            opacity: 0.7;
+            font-size: 1rem;
+        }
+        
+        /* 分类显示区域 */
+        .categories-section {
+            margin: 40px 0 30px;
+            text-align: center;
+        }
+        
+        .categories-section h3 {
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            font-size: 1.3rem;
+        }
+        
+        .categories-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            border-color: var(--primary);
+        }
+        
+        .category-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+        
+        .category-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        
+        .category-count {
+            color: #666;
+            font-size: 0.85rem;
+        }
+        
+        /* 图片显示区域 */
+        .images-section {
+            display: none;
+            margin-top: 30px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 15px;
+        }
+        
+        .back-to-categories {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .back-to-categories:hover {
+            background: #3a56d4;
+        }
+        
+        .current-category {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .image-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .image-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .image-card:hover .image-preview img {
+            transform: scale(1.05);
+        }
+        
+        .image-info {
+            padding: 15px;
+        }
+        
+        .image-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        
+        .image-desc {
+            color: var(--text-dark);
+            opacity: 0.7;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .image-date {
+            font-size: 0.85rem;
+            color: #999;
+        }
+        
+        /* 上传区域 */
+        .upload-container {
+            text-align: center;
+            margin: 40px 0 20px;
+        }
+        
+        .upload-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 3px 12px rgba(67, 97, 238, 0.3);
+        }
+        
+        .upload-btn:hover:not(:disabled) {
+            transform: translateY(-2px) scale(1.05);
+        }
+        
+        .upload-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .timer-display {
+            margin-top: 12px;
+            font-size: 1rem;
+            color: var(--text-dark);
+        }
+        
+        .upload-message {
+            margin-top: 10px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .upload-success {
+            background: rgba(6, 214, 160, 0.1);
+            color: #06d6a0;
+            border: 1px solid rgba(6, 214, 160, 0.2);
+        }
+        
+        .upload-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        
+        .upload-form {
+            display: none;
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            max-width: 350px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .file-input input, .description-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        
+        .file-input input:focus, .description-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .description-hint {
+            color: #666;
+            font-size: 0.8rem;
+            margin-top: 4px;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        
+        .submit-btn, .cancel-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .submit-btn:hover {
+            background: #3a56d4;
+        }
+        
+        .cancel-btn {
+            background: #e5e7eb;
+            color: var(--text-dark);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+        
+        .no-images {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .image-container {
+                padding: 70px 15px 30px;
+            }
+            
+            .categories-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .image-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+    
+    <div class="image-container">
+        <div class="image-header">
+            <h1 class="image-title">图片作品</h1>
+            <p class="image-subtitle">您上传的图片将会免费公开，遵循 CC-BY 4.0 协议</p>
+        </div>
+        
+        <!-- 分类显示区域 -->
+        <div class="categories-section" id="categoriesSection">
+            <h3>选择分类查看图片</h3>
+            <div class="categories-container" id="categoriesContainer"></div>
+        </div>
+        
+        <!-- 图片显示区域 -->
+        <div class="images-section" id="imagesSection">
+            <div class="section-header">
+                <button class="back-to-categories" id="backToCategories">
+                    <i class="fas fa-arrow-left"></i> 返回分类
+                </button>
+                <div class="current-category" id="currentCategory">分类名称</div>
+            </div>
+            <div class="image-grid" id="imageGrid"></div>
+        </div>
+        
+        <!-- 上传区域 -->
+        <div class="upload-container">
+            <button class="upload-btn" id="uploadBtn">
+                <i class="fas fa-plus"></i>
+            </button>
+            <div class="timer-display" id="timerDisplay">可以上传新图片</div>
+            <div id="messageContainer"></div>
+            
+            <form class="upload-form" id="uploadForm">
+                <div class="form-group file-input">
+                    <label class="form-label">选择图片文件</label>
+                    <input type="file" name="image" accept="image/jpeg, image/png, image/gif, image/webp" required>
+                    <p class="description-hint">支持 JPG, PNG, GIF, WebP (最大5MB)</p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">图片描述</label>
+                    <input type="text" name="image_description" class="description-input" placeholder="图片描述（最多20字）" maxlength="20">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">图片分类</label>
+                    <input type="text" name="image_category" class="description-input" placeholder="分类名称（最多6字）" maxlength="6">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" id="cancelUpload">取消</button>
+                    <button type="submit" class="submit-btn">上传</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<script>
+// 图片上传页面的 JavaScript 代码
+const SUPABASE_URL = 'https://whtkkvuwbxccmqybiykz.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndodGtrdnV3YnhjY21xeWJpeWt6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3MDYzNjIsImV4cCI6MjA3NTI4MjM2Mn0.XWkl5r7vLAJiAXEzUDE71WG_HFhAYXRRSkufH--svg8';
+
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const STORAGE_BUCKET = 'images';
+
+let uploadedImages = [];
+let uploadTimer = null;
+
+// 生成唯一文件名
+function generateUniqueFileName(originalName) {
+    const timestamp = Date.now();
+    const randomStr = Math.random().toString(36).substring(2, 8);
+    return `${timestamp}_${randomStr}_${originalName}`;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    initializeApp();
+});
+
+function initializeApp() {
+    loadImages();
+    setupEventListeners();
+    checkUploadTimer();
+}
+
+function setupEventListeners() {
+    const uploadBtn = document.getElementById('uploadBtn');
+    const cancelBtn = document.getElementById('cancelUpload');
+    const uploadForm = document.getElementById('uploadForm');
+    const backToCategories = document.getElementById('backToCategories');
+    
+    if (uploadBtn) {
+        uploadBtn.addEventListener('click', function() {
+            uploadForm.style.display = 'block';
+        });
+    }
+    
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', function() {
+            uploadForm.style.display = 'none';
+            resetForm();
+        });
+    }
+    
+    if (uploadForm) {
+        uploadForm.addEventListener('submit', function(event) {
+            handleImageUpload(event);
+        });
+    }
+    
+    if (backToCategories) {
+        backToCategories.addEventListener('click', function() {
+            const categoriesSection = document.getElementById('categoriesSection');
+            const imagesSection = document.getElementById('imagesSection');
+            if (categoriesSection) categoriesSection.style.display = 'block';
+            if (imagesSection) imagesSection.style.display = 'none';
+        });
+    }
+}
+
+// 检查文件大小和类型
+function validateImageFile(file) {
+    if (file.size > 5 * 1024 * 1024) {
+        showMessage('图片太大！最大支持 5MB', 'error');
+        return false;
+    }
+    
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+        showMessage('只支持 JPG, PNG, GIF, WebP 格式的图片', 'error');
+        return false;
+    }
+    
+    return true;
+}
+
+async function loadImages() {
+    try {
+        showLoading('categoriesContainer');
+        
+        const { data, error } = await supabaseClient
+            .from('images')
+            .select('*')
+            .order('upload_time', { ascending: false });
+        
+        if (error) throw error;
+        
+        uploadedImages = data || [];
+        renderCategories();
+        
+    } catch (error) {
+        console.error('加载图片失败:', error);
+        showError('加载图片失败: ' + error.message);
+    }
+}
+
+// 渲染分类
+function renderCategories() {
+    const container = document.getElementById('categoriesContainer');
+    if (!container) return;
+    
+    const categories = {};
+    uploadedImages.forEach(image => {
+        const category = image.image_category || '未分类';
+        if (!categories[category]) {
+            categories[category] = 0;
+        }
+        categories[category]++;
+    });
+    
+    if (Object.keys(categories).length === 0) {
+        container.innerHTML = `
+            <div class="category-card" style="grid-column: 1 / -1;">
+                <div class="category-icon">
+                    <i class="fas fa-images"></i>
+                </div>
+                <div class="category-name">暂无图片</div>
+                <div class="category-count">上传第一张图片</div>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = Object.entries(categories).map(([category, count]) => `
+        <div class="category-card" onclick="showCategoryImages('${category}')">
+            <div class="category-icon">
+                <i class="fas fa-folder"></i>
+            </div>
+            <div class="category-name">${escapeHtml(category)}</div>
+            <div class="category-count">${count} 张图片</div>
+        </div>
+    `).join('');
+}
+
+// 显示分类图片
+window.showCategoryImages = function(category) {
+    const categoriesSection = document.getElementById('categoriesSection');
+    const imagesSection = document.getElementById('imagesSection');
+    const currentCategory = document.getElementById('currentCategory');
+    const imageGrid = document.getElementById('imageGrid');
+    
+    if (categoriesSection) categoriesSection.style.display = 'none';
+    if (imagesSection) imagesSection.style.display = 'block';
+    if (currentCategory) currentCategory.textContent = category;
+    
+    const categoryImages = uploadedImages.filter(img => {
+        const imgCategory = img.image_category || '未分类';
+        return imgCategory === category;
+    });
+    
+    renderImages(categoryImages, imageGrid);
+}
+
+// 渲染图片 - 修复版
+function renderImages(images, container) {
+    if (!container) return;
+    
+    if (images.length === 0) {
+        container.innerHTML = '<div class="no-images">该分类暂无图片</div>';
+        return;
+    }
+    
+    container.innerHTML = images.map(image => {
+        const uploadDate = new Date(image.upload_time).toLocaleDateString('zh-CN');
+        
+        // 使用Supabase的getPublicUrl方法获取图片URL
+        const filePath = image.storage_path || image.filename;
+        const { data: { publicUrl } } = supabaseClient
+            .storage
+            .from(STORAGE_BUCKET)
+            .getPublicUrl(filePath);
+        
+        return `
+            <div class="image-card">
+                <div class="image-preview">
+                    <img src="${publicUrl}" alt="${escapeHtml(image.image_description || image.original_name)}" loading="lazy">
+                </div>
+                <div class="image-info">
+                    <div class="image-name">${escapeHtml(image.original_name)}</div>
+                    <div class="image-desc">${escapeHtml(image.image_description || '暂无描述')}</div>
+                    <div class="image-date">上传: ${uploadDate}</div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// 处理图片上传
+async function handleImageUpload(event) {
+    event.preventDefault();
+    
+    const formData = new FormData(event.target);
+    const file = formData.get('image');
+    const description = formData.get('image_description') || '';
+    const category = formData.get('image_category') || '未分类';
+    
+    if (!file) {
+        showMessage('请选择图片文件', 'error');
+        return;
+    }
+    
+    if (!validateImageFile(file)) return;
+    if (description.length > 20) {
+        showMessage('图片描述不能超过20个字', 'error');
+        return;
+    }
+    if (category.length > 6) {
+        showMessage('分类名称不能超过6个字', 'error');
+        return;
+    }
+    
+    try {
+        showMessage('上传中...', 'info');
+        
+        const fileName = generateUniqueFileName(file.name);
+        
+        const { data: storageData, error: storageError } = await supabaseClient
+            .storage
+            .from(STORAGE_BUCKET)
+            .upload(fileName, file);
+        
+        if (storageError) throw storageError;
+        
+        const { error: dbError } = await supabaseClient
+            .from('images')
+            .insert({
+                filename: fileName,
+                original_name: file.name,
+                file_size: file.size,
+                image_description: description,
+                image_category: category,
+                storage_path: storageData.path
+            });
+        
+        if (dbError) throw dbError;
+        
+        showMessage('图片上传成功！', 'success');
+        resetForm();
+        document.getElementById('uploadForm').style.display = 'none';
+        
+        setUploadTimer(5 * 60);
+        await loadImages();
+        
+    } catch (error) {
+        console.error('上传失败:', error);
+        showMessage('图片上传失败: ' + error.message, 'error');
+    }
+}
+
+// 设置上传计时器
+function setUploadTimer(seconds) {
+    const timerEnd = Date.now() + seconds * 1000;
+    localStorage.setItem('imageUploadTimer', timerEnd.toString());
+    
+    const uploadBtn = document.getElementById('uploadBtn');
+    if (uploadBtn) uploadBtn.disabled = true;
+    
+    updateTimerDisplay(seconds);
+    
+    uploadTimer = setInterval(() => {
+        const timeLeft = Math.round((timerEnd - Date.now()) / 1000);
+        
+        if (timeLeft <= 0) {
+            clearInterval(uploadTimer);
+            if (uploadBtn) uploadBtn.disabled = false;
+            const timerDisplay = document.getElementById('timerDisplay');
+            if (timerDisplay) timerDisplay.textContent = '可以上传新图片';
+            localStorage.removeItem('imageUploadTimer');
+        } else {
+            updateTimerDisplay(timeLeft);
+        }
+    }, 1000);
+}
+
+function checkUploadTimer() {
+    const savedTimer = localStorage.getItem('imageUploadTimer');
+    if (savedTimer) {
+        const timeLeft = Math.round((parseInt(savedTimer) - Date.now()) / 1000);
+        if (timeLeft > 0) {
+            setUploadTimer(timeLeft);
+        } else {
+            localStorage.removeItem('imageUploadTimer');
+        }
+    }
+}
+
+function updateTimerDisplay(seconds) {
+    const timerDisplay = document.getElementById('timerDisplay');
+    if (!timerDisplay) return;
+    
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    timerDisplay.innerHTML = 
+        `等待: <span>${minutes}:${remainingSeconds.toString().padStart(2, '0')}</span>`;
+}
+
+function showLoading(containerId) {
+    const container = document.getElementById(containerId);
+    if (container) {
+        container.innerHTML = '<div class="loading">加载中...</div>';
+    }
+}
+
+function showError(message) {
+    const container = document.getElementById('categoriesContainer');
+    if (container) {
+        container.innerHTML = `
+            <div class="no-images">
+                <h3>加载失败</h3>
+                <p>${message}</p>
+                <button onclick="loadImages()" style="margin-top: 10px; padding: 8px 16px; background: var(--primary); color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    重新加载
+                </button>
+            </div>
+        `;
+    }
+}
+
+function showMessage(message, type) {
+    const container = document.getElementById('messageContainer');
+    if (!container) return;
+    
+    container.innerHTML = `<div class="upload-message upload-${type}">${message}</div>`;
+    
+    if (type === 'success' || type === 'error') {
+        setTimeout(() => {
+            if (container) container.innerHTML = '';
+        }, 4000);
+    }
+}
+
+function resetForm() {
+    const uploadForm = document.getElementById('uploadForm');
+    if (uploadForm) uploadForm.reset();
+}
+
+function escapeHtml(unsafe) {
+    if (!unsafe) return '';
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+</script>
+</body>
+</html>

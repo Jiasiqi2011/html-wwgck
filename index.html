@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta name="360-site-verification" content="57e75ec184d69e1b8004ca9e675501e1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="logo.jpg" type="image/jpeg">
+  <title>Willgo hub资源仓库</title>
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #f72585;
+      --accent: #4cc9f0;
+      --dark-bg: #1a1a1a;
+      --content-bg: #ffffff;
+      --text-dark: #2b2d42;
+      --text-light: #f8f9fa;
+      --border-color: #e0e0e0;
+      --card-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      --hover-shadow: 0 15px 40px rgba(67, 97, 238, 0.15);
+      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+      --success: #06d6a0;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #f5f7ff 0%, #f0f4ff 100%);
+      color: var(--text-dark);
+      padding-top: 100px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    .navbar {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(26, 26, 26, 0.95);
+      color: var(--text-light);
+      padding: 12px 30px;
+      border-radius: 50px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      z-index: 1000;
+      width: 90%;
+      max-width: 800px;
+      display: flex;
+      justify-content: center;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      list-style: none;
+    }
+    
+    .nav-btn {
+      color: var(--text-light);
+      text-decoration: none;
+      padding: 10px 24px;
+      border-radius: 50px;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      font-weight: 500;
+      font-size: 0.95rem;
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      border: 2px solid transparent;
+    }
+    
+    .nav-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s;
+      border-radius: 50px;
+    }
+    
+    .nav-btn:hover, .nav-btn.active {
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+    }
+    
+    .nav-btn:hover::before, .nav-btn.active::before {
+      opacity: 1;
+    }
+    
+    .nav-btn.special-repo {
+      border: 2px solid var(--primary);
+      background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(247, 37, 133, 0.1));
+      position: relative;
+      animation: pulse-border 2s infinite;
+    }
+    
+    .nav-btn.special-repo::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: var(--gradient);
+      border-radius: 50px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .nav-btn.special-repo:hover::after {
+      opacity: 1;
+    }
+    
+    @keyframes pulse-border {
+      0%, 100% { border-color: var(--primary); }
+      50% { border-color: var(--secondary); }
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto 60px;
+      padding: 0 20px;
+    }
+    
+    .hero {
+      text-align: center;
+      padding: 80px 0 60px;
+      position: relative;
+      margin-bottom: 40px;
+    }
+    
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #e6f0ff 0%, #f0f6ff 100%);
+      z-index: -1;
+      border-radius: 24px;
+    }
+    
+    .hero-title {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 15px;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    
+    .hero-subtitle {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+      color: var(--primary);
+    }
+    
+    .hero-text {
+      font-size: 1.2rem;
+      color: var(--text-dark);
+      max-width: 700px;
+      margin: 0 auto 30px;
+      opacity: 0.9;
+    }
+    
+    .hero-image {
+      width: 100%;
+      max-width: 600px;
+      margin: 40px auto 0;
+      border-radius: 20px;
+      box-shadow: var(--hover-shadow);
+      overflow: hidden;
+      transform: translateY(20px);
+      opacity: 0;
+      animation: fadeUp 1s ease-out 0.4s forwards;
+    }
+    
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .announcement-section {
+      background: white;
+      border-radius: 20px;
+      padding: 35px;
+      margin: 0 0 50px 0;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s, transform 0.8s;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .announcement-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .announcement-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: var(--gradient);
+    }
+    
+    .announcement-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+    
+    .announcement-badge {
+      width: 12px;
+      height: 12px;
+      background: var(--secondary);
+      border-radius: 50%;
+      margin-right: 12px;
+      animation: pulse 2s infinite;
+    }
+    
+    .announcement-title {
+      font-size: 1.6rem;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+    
+    .announcement-content {
+      padding-left: 24px;
+    }
+    
+    .announcement-content h3 {
+      color: var(--primary);
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+    
+    .announcement-content p {
+      margin-bottom: 15px;
+      line-height: 1.7;
+    }
+    
+    .announcement-date {
+      color: var(--secondary);
+      font-weight: 500;
+      margin-top: 20px;
+      display: inline-block;
+      padding: 5px 15px;
+      background: rgba(247, 37, 133, 0.1);
+      border-radius: 20px;
+    }
+    
+    .featured-section {
+      background: white;
+      border-radius: 20px;
+      padding: 35px;
+      margin: 50px 0;
+      box-shadow: var(--card-shadow);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s, transform 0.8s;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .featured-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .featured-title {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 40px;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+    
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .featured-item {
+      background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);
+      border-radius: 16px;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(67, 97, 238, 0.1);
+    }
+    
+    .featured-item:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--hover-shadow);
+    }
+    
+    .featured-logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 16px;
+      object-fit: cover;
+      margin: 0 auto 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .featured-item h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: var(--text-dark);
+    }
+    
+    .featured-item p {
+      color: #666;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+    }
+    
+    .visit-btn {
+      background: var(--gradient);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+    }
+    
+    .visit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
+    }
+    
+    .collab-section {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      margin: 50px 0;
+      box-shadow: var(--card-shadow);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s, transform 0.8s;
+      border: 1px solid rgba(255,255,255,0.2);
+      text-align: center;
+    }
+    
+    .collab-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .collab-title {
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+    
+    .collab-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 25px;
+    }
+    
+    .collab-image {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .collab-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .collab-desc {
+      text-align: center;
+      max-width: 600px;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--text-dark);
+      opacity: 0.9;
+      margin-bottom: 20px;
+    }
+    
+    .enter-btn {
+      background: var(--gradient);
+      color: white;
+      border: none;
+      padding: 14px 40px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 6px 20px rgba(67, 97, 238, 0.3);
+    }
+    
+    .enter-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(67, 97, 238, 0.4);
+    }
+    
+    .about-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      margin-top: 50px;
+      box-shadow: var(--card-shadow);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s, transform 0.8s;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .about-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .about-image {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    
+    .about-image img {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border-radius: 12px;
+    }
+    
+    .about-content h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+    
+    .about-content p {
+      margin-bottom: 15px;
+      color: var(--text-dark);
+      opacity: 0.9;
+      line-height: 1.7;
+    }
+    
+    .contact-info {
+      margin-top: 30px;
+    }
+    
+    .contact-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      color: white;
+      flex-shrink: 0;
+    }
+    
+    .music-player {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      background: rgba(26, 26, 26, 0.9);
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      z-index: 1000;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      transition: all 0.3s ease;
+    }
+    
+    .player-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .player-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    
+    .player-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .control-btn {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+    
+    .control-btn:hover {
+      color: var(--accent);
+    }
+    
+    .player-body {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .song-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .song-cover {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    
+    .song-details {
+      flex: 1;
+    }
+    
+    .song-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    
+    .song-artist {
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+    
+    .progress-container {
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: var(--gradient);
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.1s ease;
+    }
+    
+    .time-display {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      opacity: 0.7;
+    }
+    
+    .player-minimized {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gradient);
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    
+    .player-minimized i {
+      font-size: 1.2rem;
+      color: white;
+    }
+    
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding-top: 80px;
+      }
+      
+      .navbar {
+        top: 10px;
+        padding: 10px 20px;
+      }
+      
+      .nav-btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+      }
+      
+      .hero-title {
+        font-size: 2.2rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.5rem;
+      }
+      
+      .hero {
+        padding: 60px 0 40px;
+      }
+      
+      .about-section {
+        grid-template-columns: 1fr;
+      }
+      
+      .about-image {
+        order: -1;
+      }
+      
+      .featured-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .announcement-content, .featured-section, .about-section, 
+      .collab-section {
+        padding: 25px;
+      }
+      
+      .container {
+        padding: 0 15px;
+      }
+      
+      .music-player {
+        width: calc(100% - 40px);
+        right: 20px;
+        left: 20px;
+      }
+    }
+  
+  .music-player {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    background: rgba(26, 26, 26, 0.9);
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    z-index: 1000;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.player-minimized {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient);
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.player-minimized i {
+    font-size: 1.2rem;
+    color: white;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .music-player {
+        width: calc(100% - 40px);
+        right: 20px;
+        left: 20px;
+    }
+    
+    .player-minimized {
+        bottom: 20px;
+        right: 20px;
+    }
+}
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <ul class="nav-links">
+      <li><a href="#" class="nav-btn" id="picLink">图片</a></li>
+      <li><a href="http://wghub.ct.ws/main/mus.php" class="nav-btn" id="musLink">音乐</a></li>
+      <li><a href="main/sof.html" class="nav-btn special-repo">菜单</a></li>
+      <li><a href="main/tv.html" class="nav-btn">视频</a></li>
+      <li><a href="#" class="nav-btn" id="textLink">代码</a></li>
+    </ul>
+  </nav>
+  
+  <!-- 主 -->
+  <div class="container">
+    <!-- 英 -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <h1 class="hero-title">WG｜一起创作</h1>
+      <h2 class="hero-subtitle">维物谷资源共享仓库</h2>
+      <p class="hero-text">smallermax博客站长j47制作的免费资源共享网站，不用登陆也能用！</p>
+      <div class="hero-image">
+        <img src="https:wghub.netlify.app/ym.jpg" alt="空间">
+      </div>
+    </section>
+    
+    <!-- 公告 -->
+    <section class="announcement-section">
+      <div class="announcement-header">
+        <div class="announcement-badge"></div>
+        <h2 class="announcement-title">通知</h2>
+      </div>
+      <div class="announcement-content">
+        <h3>重要！！</h3>
+        <p>wghub已正式开放，欢迎访问！</p>
+     <p> 选择资源仓库切换访问源可点击<a href="main/sof.html">莱单</a></p>  <p>不得上传暴力恐怖色情等内容，本站资源均为开源，可自由使用分享请确保内容开源且安全无病毒，严禁任何恶意与捣乱行为</p>
+        <span class="announcement-date">2025</span>
+      </div>
+    </section> 
+    
+    <!-- blog -->
+    <section class="collab-section">
+      <h2 class="collab-title">smallermax博客</h2>
+      <div class="collab-content">
+        <div class="collab-image">
+          <img src="https://wghub.netlify.app/q.jpg" alt="smallermax博客">
+        </div>
+        <p class="collab-desc">
+          简称"smax博客"官方博客网站，邀请您加入我们的社区，一起分享知识和创意！
+        </p>
+        <a href="https://smaxblog.netlify.app" class="enter-btn" target="_blank">未开放</a>
+      </div>
+    </section>
+    
+    <!-- 精选 -->
+    <section class="featured-section">
+      <h2 class="featured-title">友情链接</h2>
+      <div class="featured-grid">
+       <div class="featured-item">
+  <img src="http://chat.xiaoxun.my/favicon.ico" alt="xiaoxun.my聊天室" class="featured-logo">
+  <h3>xiaoxun.my聊天室</h3>
+  <p>站长：小巡</p>
+  <a href="http://chat.xiaoxun.my" class="visit-btn" target="_blank" rel="noopener noreferrer">立即访问</a>
+</div>
+
+<div class="featured-item">
+  <img src="http://shenyilts.xuanbao.icu/Icon.jpg" alt="简约聊天室" class="featured-logo">
+  <h3>简约聊天室</h3>
+  <p>站长：甚毅</p>
+  <a href="http://shenyilts.xuanbao.icu" class="visit-btn" target="_blank" rel="noopener noreferrer">立即访问</a>
+</div>
+      </div>
+    </section>
+    
+    <!-- 关于 -->
+    <section class="about-section">
+      <div class="about-content">
+        <h2>关于站长</h2>
+        <p>我是j47，smallermax博客社区与wghub的开发者。如果你喜欢可以为我们打赏！</p>
+        <p>网站图标：https://wghub.netlify.app/logo.jpg</p>
+        
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-user"></i>
+            </div>
+            <span>j47保留所有权利</span>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <span>2134286739@qq.com</span>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+        <span>Q号: 2134286739</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-image">
+        <img src="https://wghub.netlify.app/zpm.png" alt="支持我们">
+      </div>
+    </section>
+  </div>
+
+  <!-- 音乐"-->
+  <div class="music-player" id="musicPlayer">
+    <div class="player-header">
+      <div class="player-title">正在播放</div>
+      <div class="player-controls">
+        <button class="control-btn" id="minimizeBtn">
+          <i class="fas fa-window-minimize"></i>
+        </button>
+    
+        </button>
+      </div>
+    </div>
+    <div class="player-body">
+      <div class="song-info">
+        <img src="😎" alt="歌曲封面" class="song-cover" id="songCover">
+        <div class="song-details">
+          <div class="song-title" id="songTitle">欢乐进行曲</div>
+          <div class="song-artist" id="songArtist">j47</div>
+        </div>
+      </div>
+      <div class="progress-container" id="progressContainer">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div class="time-display">
+        <span id="currentTime">0:00</span>
+        <span id="duration">0:00</span>
+      </div>
+      <div class="player-controls" style="justify-content: center;">
+        <button class="control-btn" id="prevBtn">
+          <i class="fas fa-step-backward"></i>
+        </button>
+        <button class="control-btn" id="playBtn">
+          <i class="fas fa-play"></i>
+        </button>
+        <button class="control-btn" id="nextBtn">
+          <i class="fas fa-step-forward"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 最小-->
+  <div class="player-minimized" id="minimizedPlayer" style="display: none;">
+    <i class="fas fa-music"></i>
+  </div>
+
+  <!-- 360-->
+  <div style="text-align:center;margin:40px auto;max-width:500px;padding:0 20px;">
+    <style>#so360{white-space:nowrap;text-align:center}#so360 form{margin:0;padding:0;display:inline-block}#so360_keyword{width:307px;height:24px;line-height:24px;font:14px arial;padding:2px 5px;margin-right:5px;border:2px solid #3EAF0E;outline:0;vertical-align:middle;border-radius:20px;background:url(https://p.ssl.qhimg.com/t01ab1a3fb05f0ee893.png) no-repeat right center}#so360_submit{width:70px;height:32px;line-height:32px;border:0;color:#fff;background:#3FB30E;font-weight:bold;font:bold 14px arial;padding:0;padding-top:3px\9;cursor:pointer;vertical-align:middle;border-radius:20px;transition:all .3s ease}#so360_submit:hover{background:#359A0B;transform:translateY(-2px)}</style>
+    <div id="so360">    
+      <form action="https://www.so.com/s" target="_blank" id="so360form">        
+        <input type="text" autocomplete="off" name="q" id="so360_keyword" placeholder="360搜索...">        
+        <input type="submit" id="so360_submit" value="搜索">        
+        <input type="hidden" name="ie" value="utf-8">        
+        <input type="hidden" name="src" value="zz_so.com">        
+        <input type="hidden" name="site" value="so.com">        
+        <input type="hidden" name="rg" value="1">        
+        <input type="hidden" name="inurl" value="">    
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // 导航
+    function updateNavLinks() {
+        const selectedRepo = localStorage.getItem('selectedRepo') || 'main';
+        
+        const navLinks = {
+            'main': {
+                'pic': 'http://wghub.ct.ws/main/pic.php',
+                'mus': 'http://wghub.ct.ws/main/mus.php', 
+                'text': 'https://wghub.ct.ws/main/text.php'
+            },
+            '本站仓库': {
+                'pic': 'main/pic.html',
+                'mus': 'main/mus.html',
+                'text': 'main/text.html'
+            }
+        };
+        
+        const currentConfig = navLinks[selectedRepo] || navLinks['main'];
+        
+        const picBtn = document.getElementById('picLink');
+        if (picBtn) picBtn.href = currentConfig.pic;
+        
+        const musBtn = document.getElementById('musLink');
+        if (musBtn) musBtn.href = currentConfig.mus;
+        
+        const textBtn = document.getElementById('textLink');
+        if (textBtn) textBtn.href = currentConfig.text;
+    }
+
+    // 音乐
+document.addEventListener('DOMContentLoaded', function() {
+    updateNavLinks();
+    
+    const audio = new Audio();
+    let isPlaying = false;
+    let currentSongIndex = 0;
+    
+    const songs = [
+        {
+            title: "欢乐电子曲",
+            artist: "j47", 
+            src: "http://wghub.ct.ws/main/happy.mp3",
+            cover: "😎"
+        }
+    ];
+    
+    const musicPlayer = document.getElementById('musicPlayer');
+    const minimizedPlayer = document.getElementById('minimizedPlayer');
+    const minimizeBtn = document.getElementById('minimizeBtn');
+    const playBtn = document.getElementById('playBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const progressContainer = document.getElementById('progressContainer');
+    const progressBar = document.getElementById('progressBar');
+    const currentTimeEl = document.getElementById('currentTime');
+    const durationEl = document.getElementById('duration');
+    const songTitle = document.getElementById('songTitle');
+    const songArtist = document.getElementById('songArtist');
+    const songCover = document.getElementById('songCover');
+    
+    // 关闭音乐
+    musicPlayer.style.display = 'none';
+    minimizedPlayer.style.display = 'flex'; // 显示最小化按钮
+    
+    function loadSong(song) {
+        songTitle.textContent = song.title;
+        songArtist.textContent = song.artist;
+        songCover.src = song.cover;
+        audio.src = song.src;
+        
+        audio.addEventListener('loadedmetadata', () => {
+            durationEl.textContent = formatTime(audio.duration);
+        });
+    }
+    
+    function playSong() {
+        isPlaying = true;
+        audio.play();
+        playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    }
+    
+    function pauseSong() {
+        isPlaying = false;
+        audio.pause();
+        playBtn.innerHTML = '<i class="fas fa-play"></i>';
+    }
+    
+    function formatTime(seconds) {
+        const min = Math.floor(seconds / 60);
+        const sec = Math.floor(seconds % 60);
+        return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+    }
+    
+    function updateProgress(e) {
+        const { duration, currentTime } = e.srcElement;
+        const progressPercent = (currentTime / duration) * 100;
+        progressBar.style.width = `${progressPercent}%`;
+        currentTimeEl.textContent = formatTime(currentTime);
+    }
+    
+    function setProgress(e) {
+        const width = this.clientWidth;
+        const clickX = e.offsetX;
+        const duration = audio.duration;
+        
+        audio.currentTime = (clickX / width) * duration;
+    }
+    
+    function prevSong() {
+        currentSongIndex--;
+        if (currentSongIndex < 0) {
+            currentSongIndex = songs.length - 1;
+        }
+        loadSong(songs[currentSongIndex]);
+        if (isPlaying) playSong();
+    }
+    
+    function nextSong() {
+        currentSongIndex++;
+        if (currentSongIndex > songs.length - 1) {
+            currentSongIndex = 0;
+        }
+        loadSong(songs[currentSongIndex]);
+        if (isPlaying) playSong();
+    }
+    
+    minimizeBtn.addEventListener('click', () => {
+        musicPlayer.style.display = 'none';
+        minimizedPlayer.style.display = 'flex';
+    });
+    
+    minimizedPlayer.addEventListener('click', () => {
+        musicPlayer.style.display = 'block';
+        minimizedPlayer.style.display = 'none';
+    });
+    
+    playBtn.addEventListener('click', () => {
+        isPlaying ? pauseSong() : playSong();
+    });
+    
+    prevBtn.addEventListener('click', prevSong);
+    nextBtn.addEventListener('click', nextSong);
+    
+    audio.addEventListener('timeupdate', updateProgress);
+    audio.addEventListener('ended', nextSong);
+    
+    progressContainer.addEventListener('click', setProgress);
+    
+    loadSong(songs[currentSongIndex]);
+   
+    
+        // 滚动
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.announcement-section, .featured-section, .about-section, .collab-section');
+            
+            elements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight - 100;
+                
+                if (isVisible) {
+                    el.classList.add('visible');
+                }
+            });
+        };
+        
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
+        
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if (!this.getAttribute('href')) return;
+                window.location.href = this.getAttribute('href');
+            });
+        });
+    });
+  </script>
+</body>
+</html>

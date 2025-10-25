@@ -1,0 +1,9 @@
+{
+  "name": "my-html5-website",
+  "version": "1.0.0",
+  "description": "wghub资源仓库",
+  "scripts": {
+    "build": "echo 'j47' && exit 0"
+  },
+  "license": "MIT"
+}

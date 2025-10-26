@@ -749,8 +749,6 @@
     font-size: 1.2rem;
     color: white;
 }
-
-/* 移动端适配 */
 @media (max-width: 768px) {
     .music-player {
         width: calc(100% - 40px);
@@ -768,7 +766,7 @@
 </head>
 <body>
   
-  <!-- 导航栏 -->
+  <!-- 导航-->
   <nav class="navbar">
     <ul class="nav-links">
       <li><a href="#" class="nav-btn" id="picLink">图片</a></li>
@@ -790,8 +788,7 @@
       <div class="hero-image">
         <img src="pic/ym.jpg" alt="空间">
       </div>
-    </section>
-    
+    </section>    
     <!-- 公告 -->
     <section class="announcement-section">
       <div class="announcement-header">
@@ -805,7 +802,6 @@
         <span class="announcement-date">2025</span>
       </div>
     </section> 
-    
     <!-- blog -->
     <section class="collab-section">
       <h2 class="collab-title">smallermax博客</h2>
@@ -819,7 +815,6 @@
         <a href="https://smaxblog.netlify.app" class="enter-btn" target="_blank">未开放</a>
       </div>
     </section>
-    
     <!-- 精选 -->
     <section class="featured-section">
       <h2 class="featured-title">友情链接</h2>
@@ -830,7 +825,6 @@
   <p>站长：小巡</p>
   <a href="http://chat.xiaoxun.my" class="visit-btn" target="_blank" rel="noopener noreferrer">立即访问</a>
 </div>
-
 <div class="featured-item">
   <img src="http://shenyilts.xuanbao.icu/icon.jpg" alt="简约聊天室" class="featured-logo">
   <h3>简约聊天室</h3>
@@ -873,7 +867,6 @@
       </div>
     </section>
   </div>
-
   <!-- 音乐"-->
   <div class="music-player" id="musicPlayer">
     <div class="player-header">
@@ -882,13 +875,11 @@
         <button class="control-btn" id="minimizeBtn">
           <i class="fas fa-window-minimize"></i>
         </button>
-    
         </button>
       </div>
     </div>
     <div class="player-body">
       <div class="song-info">
-        <img src="😎" alt="歌曲封面" class="song-cover" id="songCover">
         <div class="song-details">
           <div class="song-title" id="songTitle">欢乐进行曲</div>
           <div class="song-artist" id="songArtist">j47</div>
@@ -914,12 +905,10 @@
       </div>
     </div>
   </div>
-
   <!-- 最小-->
   <div class="player-minimized" id="minimizedPlayer" style="display: none;">
     <i class="fas fa-music"></i>
   </div>
-
   <!-- 360-->
   <div style="text-align:center;margin:40px auto;max-width:500px;padding:0 20px;">
     <style>#so360{white-space:nowrap;text-align:center}#so360 form{margin:0;padding:0;display:inline-block}#so360_keyword{width:307px;height:24px;line-height:24px;font:14px arial;padding:2px 5px;margin-right:5px;border:2px solid #3EAF0E;outline:0;vertical-align:middle;border-radius:20px;background:url(https://p.ssl.qhimg.com/t01ab1a3fb05f0ee893.png) no-repeat right center}#so360_submit{width:70px;height:32px;line-height:32px;border:0;color:#fff;background:#3FB30E;font-weight:bold;font:bold 14px arial;padding:0;padding-top:3px\9;cursor:pointer;vertical-align:middle;border-radius:20px;transition:all .3s ease}#so360_submit:hover{background:#359A0B;transform:translateY(-2px)}</style>
@@ -935,7 +924,6 @@
       </form>
     </div>
   </div>
-
   <script>
     // 导航
     function updateNavLinks() {
@@ -943,14 +931,14 @@
         
         const navLinks = {
             'main': {
-                'pic': 'http://wghub.ct.ws/main/pic.php',
-                'mus': 'http://wghub.ct.ws/main/mus.php', 
+                'pic': 'https://wghub.ct.ws/main/pic.php',
+                'mus': 'https://wghub.ct.ws/main/mus.php', 
                 'text': 'https://wghub.ct.ws/main/text.php'
             },
             '本站仓库': {
-                'pic': 'main/pic.html',
-                'mus': 'main/mus.html',
-                'text': 'main/text.html'
+                'pic': 'main/pic',
+                'mus': 'main/mus',
+                'text': 'main/text'
             }
         };
         
@@ -965,7 +953,6 @@
         const textBtn = document.getElementById('textLink');
         if (textBtn) textBtn.href = currentConfig.text;
     }
-
     // 音乐
 document.addEventListener('DOMContentLoaded', function() {
     updateNavLinks();
@@ -981,8 +968,7 @@ document.addEventListener('DOMContentLoaded', function() {
             src: "http://wghub.ct.ws/main/happy.mp3",
             cover: "😎"
         }
-    ];
-    
+    ]; 
     const musicPlayer = document.getElementById('musicPlayer');
     const minimizedPlayer = document.getElementById('minimizedPlayer');
     const minimizeBtn = document.getElementById('minimizeBtn');
@@ -996,7 +982,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const songTitle = document.getElementById('songTitle');
     const songArtist = document.getElementById('songArtist');
     const songCover = document.getElementById('songCover');
-    
     // 关闭音乐
     musicPlayer.style.display = 'none';
     minimizedPlayer.style.display = 'flex'; 
@@ -1085,9 +1070,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     progressContainer.addEventListener('click', setProgress);
     
-    loadSong(songs[currentSongIndex]);
-   
-    
+    loadSong(songs[currentSongIndex]);  
         // 滚动
         const animateOnScroll = () => {
             const elements = document.querySelectorAll('.announcement-section, .featured-section, .about-section, .collab-section');

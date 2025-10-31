@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API测试 - WGH</title>
+<style>
+:root{--primary:#4361ee;--secondary:#f72585;--gradient:linear-gradient(135deg,var(--primary),var(--secondary));}*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}body{background:linear-gradient(135deg,#f5f7ff 0%,#f0f4ff 100%);min-height:100vh;padding:20px;}.container{max-width:1000px;margin:0 auto;}.header{text-align:center;margin-bottom:30px;padding:30px 0;}.title{font-size:2rem;font-weight:800;margin-bottom:10px;background:var(--gradient);-webkit-background-clip:text;background-clip:text;color:transparent;}.subtitle{color:#666;}.tool-container{background:white;border-radius:20px;padding:30px;box-shadow:0 8px 30px rgba(0,0,0,0.08);margin-bottom:20px;}.request-panel{margin-bottom:20px;}.input-group{margin-bottom:15px;}.input-row{display:grid;grid-template-columns:100px 1fr;gap:10px;margin-bottom:10px;align-items:center;}@media(max-width:768px){.input-row{grid-template-columns:1fr;}.input-row label{margin-bottom:5px;}}.header-row{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-bottom:8px;align-items:center;}@media(max-width:768px){.header-row{grid-template-columns:1fr;gap:6px;}.header-row input{margin-bottom:5px;}}label{font-weight:600;font-size:14px;}.url-input,.header-input,.body-input{padding:8px 10px;border:2px solid #e0e0e0;border-radius:6px;font-size:14px;width:100%;}.body-input{height:120px;font-family:'Courier New',monospace;resize:vertical;}.method-select{padding:8px 10px;border:2px solid #e0e0e0;border-radius:6px;background:white;width:100%;}.send-btn{background:var(--gradient);color:white;border:none;padding:10px 25px;border-radius:20px;font-weight:600;cursor:pointer;margin:5px;}.small-btn{padding:6px 12px;border:1px solid #e0e0e0;border-radius:4px;background:#f8f9fa;cursor:pointer;font-size:12px;white-space:nowrap;}.small-btn:hover{background:#e9ecef;}.api-presets{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap;}@media(max-width:768px){.api-presets{flex-direction:column;}.api-presets .small-btn{width:100%;}}.response-panel{border:2px solid #e0e0e0;border-radius:10px;overflow:hidden;margin-top:20px;}.response-header{background:#f8f9fa;padding:10px 15px;border-bottom:1px solid #e0e0e0;font-weight:600;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}@media(max-width:768px){.response-header{flex-direction:column;align-items:flex-start;}}.response-content{padding:15px;max-height:400px;overflow:auto;font-family:'Courier New',monospace;font-size:13px;}.status{display:inline-block;padding:3px 8px;border-radius:10px;color:white;font-weight:600;font-size:12px;margin-right:10px;}.status.success{background:#06d6a0;}.status.error{background:#f72585;}.status.info{background:#4361ee;}.footer{text-align:center;color:#666;margin-top:30px;padding:20px;}.footer a{color:var(--primary);text-decoration:none;}.time-info{color:#666;font-size:12px;margin-right:15px;}.copy-btn{background:#f72585;color:white;border:none;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:12px;}.button-group{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}@media(max-width:768px){.button-group{flex-direction:column;}.button-group .send-btn{width:100%;}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1 class="title">API测试</h1>
+<p class="subtitle">wghub免费API接口调试工具</p>
+</div>
+<div class="tool-container">
+<div class="request-panel">
+<div class="input-row">
+<label>请求方法</label>
+<select class="method-select" id="methodSelect">
+<option value="GET">GET</option>
+<option value="POST">POST</option>
+<option value="PUT">PUT</option>
+<option value="DELETE">DELETE</option>
+<option value="PATCH">PATCH</option>
+</select>
+</div>
+<div class="input-row">
+<label>请求URL</label>
+<input type="url" class="url-input" id="urlInput" placeholder="https://api.example.com/data">
+</div>
+<div class="input-group">
+<label>请求头</label>
+<div class="header-row">
+<input type="text" class="header-input" id="headerKey" placeholder="Header名称">
+<input type="text" class="header-input" id="headerValue" placeholder="Header值">
+<button class="small-btn" id="addHeaderBtn">添加</button>
+</div>
+<div id="headersContainer"></div>
+</div>
+<div class="input-group" id="bodyGroup">
+<label>请求体</label>
+<textarea class="body-input" id="bodyInput" placeholder='{"key": "value"}'></textarea>
+</div>
+<div class="api-presets">
+<button class="small-btn" data-preset="jsonplaceholder">JSONPlaceholder API</button>
+<button class="small-btn" data-preset="github">GitHub API</button>
+<button class="small-btn" data-preset="weather">天气API</button>
+<button class="small-btn" data-preset="clear">清空所有</button>
+</div>
+<div class="button-group">
+<button class="send-btn" id="sendBtn">发送请求</button>
+<button class="send-btn" id="resetBtn" style="background:#6c757d;">重置</button>
+</div>
+</div>
+<div class="response-panel">
+<div class="response-header">
+<span>响应结果</span>
+<button class="copy-btn" id="copyResponseBtn">复制响应</button>
+</div>
+<div class="response-content" id="responseContent">
+<div style="color:#666;text-align:center;padding:40px;">输出……</div>
+</div>
+</div>
+</div>
+<div class="footer">
+<a href="https://wghub.netlify.app" target="_blank">https://wghub.netlify.app</a>
+</div>
+</div>
+<script>
+const methodSelect=document.getElementById('methodSelect');const urlInput=document.getElementById('urlInput');const bodyInput=document.getElementById('bodyInput');const bodyGroup=document.getElementById('bodyGroup');const headerKey=document.getElementById('headerKey');const headerValue=document.getElementById('headerValue');const addHeaderBtn=document.getElementById('addHeaderBtn');const headersContainer=document.getElementById('headersContainer');const sendBtn=document.getElementById('sendBtn');const resetBtn=document.getElementById('resetBtn');const copyResponseBtn=document.getElementById('copyResponseBtn');const responseContent=document.getElementById('responseContent');let headers={};let startTime=0;methodSelect.addEventListener('change',()=>{const method=methodSelect.value;bodyGroup.style.display=method==='GET'?'none':'block';});addHeaderBtn.addEventListener('click',()=>{const key=headerKey.value.trim();const value=headerValue.value.trim();if(key&&value){headers[key]=value;updateHeadersDisplay();headerKey.value='';headerValue.value='';}});document.querySelectorAll('.api-presets .small-btn').forEach(btn=>{btn.addEventListener('click',(e)=>{const preset=e.target.dataset.preset;loadPreset(preset);});});sendBtn.addEventListener('click',async()=>{const url=urlInput.value.trim();const method=methodSelect.value;if(!url){alert('请输入请求URL！');return;}sendBtn.disabled=true;sendBtn.textContent='请求中...';startTime=Date.now();try{const options={method,headers:{'Content-Type':'application/json',...headers},mode:'cors'};if(method!=='GET'&&bodyInput.value.trim()){try{JSON.parse(bodyInput.value.trim());options.body=bodyInput.value.trim();}catch{e{alert('请求体必须是有效的JSON格式！');return;}}}const response=await fetch(url,options);const contentType=response.headers.get('content-type');let data;if(contentType&&contentType.includes('application/json')){data=await response.json();}else{data=await response.text();}displayResponse(response,data);}catch(error){displayError(error);}finally{sendBtn.disabled=false;sendBtn.textContent='发送请求';}});resetBtn.addEventListener('click',()=>{urlInput.value='';bodyInput.value='';headers={};updateHeadersDisplay();responseContent.innerHTML='<div style="color:#666;text-align:center;padding:40px;">输出……</div>';});copyResponseBtn.addEventListener('click',()=>{const text=responseContent.innerText;navigator.clipboard.writeText(text).then(()=>{alert('响应内容已复制！');});});function updateHeadersDisplay(){headersContainer.innerHTML=Object.entries(headers).map(([key,value])=>`<div class="header-row"><input type="text" class="header-input" value="${key}" readonly><input type="text" class="header-input" value="${value}" readonly><button class="small-btn" onclick="removeHeader('${key}')">删除</button></div>`).join('');}function removeHeader(key){delete headers[key];updateHeadersDisplay();}function loadPreset(preset){switch(preset){case'jsonplaceholder':urlInput.value='https://jsonplaceholder.typicode.com/posts/1';methodSelect.value='GET';headers={};break;case'github':urlInput.value='https://api.github.com/users/octocat';methodSelect.value='GET';headers={'User-Agent':'WgHub-API-Tool'};break;case'weather':urlInput.value='https://api.weatherapi.com/v1/current.json?key=YOUR_KEY&q=Beijing';methodSelect.value='GET';headers={};break;case'clear':urlInput.value='';bodyInput.value='';headers={};break;}updateHeadersDisplay();methodSelect.dispatchEvent(new Event('change'));}function displayResponse(response,data){const endTime=Date.now();const duration=endTime-startTime;const statusClass=response.ok?'success':'error';const dataSize=typeof data==='string'?data.length:JSON.stringify(data).length;responseContent.innerHTML=`<div style="margin-bottom:15px;"><span class="status ${statusClass}">${response.status} ${response.statusText}</span><span class="time-info">耗时: ${duration}毫秒</span><span class="time-info">大小: ${formatSize(dataSize)}</span></div><pre>${typeof data==='string'?data:JSON.stringify(data,null,2)}</pre>`;}function displayError(error){const endTime=Date.now();const duration=endTime-startTime;responseContent.innerHTML=`<div style="margin-bottom:15px;"><span class="status error">请求失败</span><span class="time-info">耗时: ${duration}毫秒</span></div><div style="color:#f72585;">${error.message}</div><div style="margin-top:10px;color:#666;font-size:12px;">提示：请检查URL格式、网络连接或CORS策略</div>`;}function formatSize(bytes){if(bytes<1024)return bytes+' B';else if(bytes<1048576)return(bytes/1024).toFixed(1)+' KB';else return(bytes/1048576).toFixed(1)+' MB';}methodSelect.dispatchEvent(new Event('change'));
+</script>
+</body>
+</html>

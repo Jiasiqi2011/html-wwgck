@@ -52,7 +52,6 @@
 </div>
 <div class="announcement-content">
 <h3>1.7版本！！</h3>
-<p>选择共享仓库切换访问源可点击<a href="main/sof.html">莱单</a></p>
 <p>不得上传暴力恐怖色情等内容，请确保内容安全无病毒后再上传，严禁任何恶意与捣乱行为</p>
 <span class="announcement-date">2025.11.1</span>
 </div>
@@ -138,31 +137,5 @@
 </div>
 </section>
 </div>
-<script>
-function updateNavLinks() {
-const selectedRepo = localStorage.getItem('selectedRepo') || 'main';
-const navLinks = {
-'main': {
-'pic': 'https://wghub.ct.ws/main/pic.php',
-'text':'https://wghub.ct.ws/main/text.php'
-},
-'本站仓库': {
-'pic': 'main/pic.html',
-'text': 'main/text.html'
-}
-};
-const currentConfig = navLinks[selectedRepo] || navLinks['main'];
-const picBtn = document.getElementById('picLink');
-if (picBtn) picBtn.href = currentConfig.pic;
-const musBtn = document.getElementById('musLink');
-if (musBtn) musBtn.href = currentConfig.mus;
-const textBtn = document.getElementById('textLink');
-if (textBtn) textBtn.href = currentConfig.text;
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-updateNavLinks();
-});
-</script>
 </body>
 </html>

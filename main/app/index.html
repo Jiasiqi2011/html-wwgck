@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>思亿站长圈 -Android站长博客  </title>
+<meta name="description" content=思亿站长圈安卓，专为开发者打造的移动端IDE。支持代码编辑、内置终端、文件管理，免费下载，轻量简洁，支持Android 10+。">
+<meta name="keywords" content="思亿工坊,安卓桌面版,Android开发工具,移动端IDE,代码编辑器,内置终端,文件管理器,免费下载">
+<meta name="author" content="思亿工坊开源公益社区">
+<link rel="icon" href="https://bksy.top/favicon.ico">
+<link rel="apple-touch-icon" href="https://bksy.top/favicon.ico">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#ffffff;color:#1e1e1e;line-height:1.5;}.navbar{background:#1a1a1a;border-bottom:1px solid #333;padding:0 24px;position:sticky;top:0;z-index:100;animation:slideDown 0.5s ease-out;}.nav-container{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:70px;}.logo-area{display:flex;align-items:center;gap:12px;}.logo-icon{width:36px;height:36px;border-radius:10px;overflow:hidden;background:#333;}.logo-icon img{width:100%;height:100%;object-fit:cover;display:block;}.logo-text{font-weight:600;font-size:18px;color:#ffffff;}.nav-right{display:flex;gap:24px;}.nav-link{text-decoration:none;font-size:15px;font-weight:500;color:#7cb87c;transition:opacity 0.2s;cursor:pointer;}.nav-link:hover{opacity:0.8;color:#9acc9a;}.main{max-width:1000px;margin:0 auto;padding:40px 20px 60px;}.hero{margin-bottom:30px;animation:fadeInUp 0.6s ease-out;display:flex;align-items:center;justify-content:flex-start;gap:25px;}.hero-icon{width:100px;height:100px;border-radius:24px;overflow:hidden;background:#f0f0f0;box-shadow:0 10px 20px rgba(79,138,79,0.3);flex-shrink:0;border:2px solid #4f8a4f;}.hero-icon img{width:100%;height:100%;object-fit:cover;display:block;}.hero-text{flex:1;}.hero-text h1{font-size:48px;font-weight:600;margin-bottom:8px;color:#1e1e1e;}.hero-text h1 span{color:#4f8a4f;}.hero-text p{font-size:18px;color:#5f6b7a;}.download-section{margin:30px 0 20px;animation:fadeInUp 0.6s ease-out 0.1s both;}.download-btn{display:inline-block;background:#4f8a4f;color:white;text-decoration:none;padding:14px 48px;border-radius:50px;font-size:16px;font-weight:500;border:none;box-shadow:0 4px 12px rgba(79,138,79,0.2);margin-bottom:20px;transition:transform 0.2s,box-shadow 0.2s;}.download-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(79,138,79,0.3);}.meta-info{display:flex;align-items:center;gap:32px;color:#6b7a8f;font-size:14px;flex-wrap:wrap;}.meta-info span i{color:#4f8a4f;margin-right:8px;width:16px;}.gallery-section{margin-top:30px;animation:fadeInUp 0.6s ease-out 0.2s both;}.gallery-section h3{font-size:20px;font-weight:500;margin-bottom:24px;color:#1e1e1e;display:flex;align-items:center;gap:8px;}.gallery-section h3 i{color:#4f8a4f;font-size:20px;}.gallery-scroll{width:100%;overflow-x:auto;overflow-y:hidden;padding-bottom:20px;margin-bottom:10px;scrollbar-width:thin;scrollbar-color:#4f8a4f #e2e8f0;-webkit-overflow-scrolling:touch;}.gallery-scroll::-webkit-scrollbar{height:8px;}.gallery-scroll::-webkit-scrollbar-track{background:#e2e8f0;border-radius:10px;}.gallery-scroll::-webkit-scrollbar-thumb{background:#4f8a4f;border-radius:10px;}.gallery-track{display:flex;gap:25px;width:max-content;padding:4px 2px;animation:scrollLeft 30s linear infinite;}.gallery-track:hover{animation-play-state:paused;}.gallery-item{width:320px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;transition:all 0.3s ease;animation:scaleIn 0.5s ease-out;animation-fill-mode:both;flex-shrink:0;}.gallery-item:nth-child(1){animation-delay:0.3s;}.gallery-item:nth-child(2){animation-delay:0.4s;}.gallery-item:nth-child(3){animation-delay:0.5s;}.gallery-item:nth-child(4){animation-delay:0.6s;}.gallery-item:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,0.1);border-color:#4f8a4f;}.gallery-img{width:100%;aspect-ratio:9/16;background:#e8f0e8;position:relative;}.gallery-img img{width:100%;height:100%;object-fit:cover;display:block;}.gallery-badge{position:absolute;top:12px;left:12px;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);color:white;padding:6px 14px;border-radius:30px;font-size:13px;font-weight:500;border:1px solid rgba(255,255,255,0.2);}.gallery-badge i{color:#7cb87c;margin-right:6px;font-size:12px;}.more-software{margin-top:50px;animation:fadeInUp 0.6s ease-out 0.25s both;}.more-software h3{font-size:20px;font-weight:500;margin-bottom:24px;color:#1e1e1e;display:flex;align-items:center;gap:8px;}.more-software h3 i{color:#4f8a4f;font-size:20px;}.software-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:500px;}.software-item{background:#f8fafc;border:1px solid #e2e8f0;border-radius:20px;padding:20px;text-align:center;transition:all 0.3s ease;}.software-item:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,0.1);border-color:#4f8a4f;}.software-icon{width:80px;height:80px;margin:0 auto 12px;border-radius:20px;overflow:hidden;background:#e8f0e8;}.software-icon img{width:100%;height:100%;object-fit:cover;display:block;}.software-item p{font-size:16px;font-weight:500;color:#1e1e1e;}.desc-area{margin:40px 0 30px;animation:fadeInUp 0.6s ease-out 0.3s both;background:#f8fafc;border:1px solid #e2e8f0;border-radius:20px;padding:28px;border-left:5px solid #4f8a4f;}.desc-area h4{font-size:20px;font-weight:600;margin-bottom:12px;color:#1e1e1e;display:flex;align-items:center;gap:8px;}.desc-area h4 i{color:#4f8a4f;font-size:20px;}.desc-area p{font-size:16px;color:#334155;line-height:1.7;}.changelog-section{margin-top:30px;animation:fadeInUp 0.6s ease-out 0.35s both;}.changelog-section h3{font-size:20px;font-weight:500;margin-bottom:20px;color:#1e1e1e;display:flex;align-items:center;gap:8px;}.changelog-section h3 i{color:#4f8a4f;font-size:20px;}.changelog-text{font-size:16px;color:#334155;line-height:1.8;padding:16px 20px;background:#f8fafc;border-radius:16px;border:1px solid #e2e8f0;}.changelog-text p{margin-bottom:8px;}.changelog-text p:last-child{margin-bottom:0;}.changelog-text i{color:#4f8a4f;margin-right:8px;}.footer{background:#1a1a1a;color:#8a99aa;padding:24px 20px;margin-top:60px;border-top:1px solid #333;animation:fadeIn 0.8s ease-out;}.footer-container{max-width:1000px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;font-size:13px;}.footer a{color:#a0b3cc;text-decoration:none;margin-left:24px;transition:color 0.2s;}.footer a:hover{color:#4f8a4f;}@keyframes slideDown{from{transform:translateY(-100%);opacity:0;}to{transform:translateY(0);opacity:1;}}@keyframes fadeInUp{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}@keyframes scaleIn{from{transform:scale(0.95);opacity:0;}to{transform:scale(1);opacity:1;}}@keyframes scrollLeft{0%{transform:translateX(0);}100%{transform:translateX(-1380px);}}@media (max-width:768px){.hero{flex-direction:column;align-items:flex-start;gap:15px;}.hero-icon{width:90px;height:90px;}.hero-text h1{font-size:36px;}.hero-text p{font-size:16px;}.gallery-item{width:260px;}@keyframes scrollLeft{0%{transform:translateX(0);}100%{transform:translateX(-1140px);}}.footer-container{flex-direction:column;gap:12px;text-align:center;}.footer a{margin:0 12px;}}@media (max-width:480px){.gallery-item{width:220px;}@keyframes scrollLeft{0%{transform:translateX(0);}100%{transform:translateX(-980px);}}}
+</style>
+</head>
+<body>
+<div class="navbar">
+<div class="nav-container">
+<div class="logo-area">
+<div class="logo-icon"><img src="https://bksy.top/favicon.ico" alt="思亿工坊"></div>
+<div class="logo-text">思亿工坊</div>
+</div>
+<div class="nav-right">
+<a href="https://bksy.top" class="nav-link" target="_blank">社区</a>
+<a href="https://j47v.top/dl.html" class="nav-link">加入</a>
+</div>
+</div>
+</div>
+<div class="main">
+<div class="hero">
+<div class="hero-icon"><img src="https://bksy.top/favicon.ico" alt="思亿工坊图标"></div>
+<div class="hero-text">
+<h1>思亿站长圈<span>v1.0</span></h1>
+<p>不懂技术 ？就下载思亿站长圈不但可以 链接思亿工坊的项目实现在手机端的一键自动化控制还可以查看技术帖子 </p>
+</div>
+</div>
+<div class="download-section">
+<a href="#" class="download-btn" download><i class="fas fa-download" style="margin-right:8px;"></i>预约 </a>
+<div class="meta-info">
+<span><i class="fas fa-hdd"></i> 34.5 MB</span>
+<span><i class="fas fa-android"></i> Android 5+</span>
+<span><i class="fas fa-microchip"></i> arm64</span>
+</div>
+</div>
+<div class="gallery-section">
+<h3><i class="fas fa-camera-retro"></i> 界面预览</h3>
+<div class="gallery-scroll">
+<div class="gallery-track" id="galleryTrack"></div>
+</div>
+</div>
+
+<div class="desc-area" id="detailDesc">
+<h4><i class="fas fa-info-circle"></i> 详细描述</h4>
+<p id="descText">思亿站长圈是一款专为开发者打造的移动端IDE，集代码编辑、终端模拟、文件管理于一体，助你在手机上高效编程。支持语法高亮、自动补全、bash环境、文件压缩解压、主题自定义等功能，轻量稳定，适用于Android 5+设备。</p>
+</div>
+<div class="changelog-section">
+<h3><i class="fas fa-history"></i> 更新日志</h3>
+<div class="changelog-text" id="changelogText"></div>
+</div>
+<div class="more-software">
+<h3><i class="fas fa-th-large"></i> 更多软件</h3>
+<div class="software-grid" id="softwareGrid"></div>
+</div>
+</div>
+<div class="footer">
+<div class="footer-container">
+<div>© 2026 思亿工坊 · 保留所有权利</div>
+<div>
+<a href="https://bksy.top/main/gy">关于</a>
+</div>
+</div>
+</div>
+<script>
+const galleryData = [
+{icon:'fa-code', badge:'代码编辑器', img:'1'},
+{icon:'fa-terminal', badge:'内置终端', img:'2'},
+{icon:'fa-folder-open', badge:'文件管理器', img:'3'},
+{icon:'fa-cog', badge:'设置面板', img:'4'}
+];
+const softwareData = [
+{name:'<a href="yy.html">阿波罗音乐播放器</a>', icon:'pic/yy.jpg'}
+
+];
+const changelogData = [
+'• v1.0 (2026.03.14) 第一个正式版本发布，包含代码编辑器、内置终端、文件管理器、设置面板等核心功能。',
+'• 支持语法高亮、自动补全、多光标编辑',
+'• 集成bash环境，支持常用命令和包管理',
+'• 文件管理器支持双栏浏览、压缩解压',
+'• 提供主题切换、字体大小、快捷键自定义'
+];
+function renderGallery() {
+const track = document.getElementById('galleryTrack');
+if (!track) return;
+let html = '';
+for (let i = 0; i < 8; i++) {
+const item = galleryData[i % galleryData.length];
+const index = i + 1;
+html += `<div class="gallery-item">
+<div class="gallery-img">
+<img src="https://picsum.photos/400/700?random=${index}" alt="${item.badge}">
+<div class="gallery-badge"><i class="fas ${item.icon}"></i> ${item.badge}</div>
+</div>
+</div>`;
+}
+track.innerHTML = html;
+}
+function renderSoftware() {
+const grid = document.getElementById('softwareGrid');
+if (!grid) return;
+let html = '';
+softwareData.forEach(item => {
+html += `<div class="software-item">
+<div class="software-icon"><img src="${item.icon}" alt="${item.name}"></div>
+<p>${item.name}</p>
+</div>`;
+});
+grid.innerHTML = html;
+}
+function renderChangelog() {
+const container = document.getElementById('changelogText');
+if (!container) return;
+let html = '';
+changelogData.forEach(item => {
+html += `<p><i class="fas fa-circle" style="font-size: 8px; vertical-align: middle;"></i> ${item}</p>`;
+});
+container.innerHTML = html;
+}
+document.addEventListener('DOMContentLoaded', function() {
+renderGallery();
+renderSoftware();
+renderChangelog();
+const year = new Date().getFullYear();
+document.querySelectorAll('.footer-container div:first-child').forEach(e => {
+e.innerHTML = `© ${year} 思亿工坊`;
+});
+document.getElementById('changelogLink').addEventListener('click', function(e) {
+e.preventDefault();
+alert('当前版本: v1.0\n发布日期: 2026.03.14\n\n更新内容:\n' + changelogData.join('\n'));
+});
+});
+</script>
+</body>
+</html>

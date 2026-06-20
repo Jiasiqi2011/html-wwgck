@@ -4,7 +4,7 @@
 
 <div align="center">
 
-![LOGO](favicon.ico)
+[![LOGO](https://ck.bksy.top/favicon.ico)](https://ck.bksy.top)
 
 **官方网站：[https://ck.bksy.top](https://ck.bksy.top)**
 

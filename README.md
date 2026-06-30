@@ -1,12 +1,12 @@
 # html-wwgck
 
-**云耀计算源码 - 维物谷仓库 HTML**
+**思弈云源码 - 维物谷仓库 HTML**
 
 <div align="center">
 
 [![LOGO](https://ck.bksy.top/favicon.ico)](https://ck.bksy.top)
 
-**官方网站：[https://ck.bksy.top](https://ck.bksy.top)**
+**网站：[https://ck.bksy.top](https://ck.bksy.top)**
 
 </div>
 
